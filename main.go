@@ -8,19 +8,20 @@ import (
 )
 
 func main() {
-	viper.SetConfigType("json")
+	viper.SetConfigType("env")
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
+	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
 	}
 
-	requestLimit := viper.GetInt("limit")
-	requestLimitDuration := viper.GetInt("limitDuration")
-	redisUrl := viper.GetString("redisEndpoint")
-	redisPassword := viper.GetString("redisPassword")
+	requestLimit := viper.GetInt("LIMIT")
+	requestLimitDuration := viper.GetInt("LIMIT_DURATION")
+	redisUrl := viper.GetString("REDIS_ENDPOINT")
+	redisPassword := viper.GetString("REDIS_PASSWORD")
 
 	redisClient := redis.NewClient(redisUrl, redisPassword)
 	redisRepository := limiter.NewRedisRepository(redisClient)
