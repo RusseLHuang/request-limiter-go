@@ -10,8 +10,14 @@ Create config.env at root directory
 ```
 LIMIT=60
 LIMIT_DURATION=60
-REDIS_ENDPOINT=${REDIS_HOST}:${REDIS_PORT}
-REDIS_PASSWORD=${REDIS_PASSWORD}
+REDIS_ENDPOINT=127.0.0.1:6379
+REDIS_PASSWORD=
+```
+
+## Run Redis through docker-compose
+docker compose version 3.7+
+```
+docker-compose up -d
 ```
 
 # In-Memory Database
