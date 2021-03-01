@@ -39,16 +39,13 @@ func (limiter *LimiterService) LimitRequest(
 		limiter.Repository.Set(ctx, requestLatestTimeKey, strconv.Itoa(now), limiter.RequestLimitDuration)
 	}
 
-	limiter.Repository.Increment(ctx, requestKey)
-	requestCount := limiter.Repository.Get(ctx, requestKey)
-	requestCountInt, _ := strconv.Atoi(requestCount)
-
-	if limiter.isExceeded(requestCountInt) {
+	requestCount := limiter.Repository.Increment(ctx, requestKey)
+	if limiter.isExceeded(requestCount) {
 		err := errors.New("Error")
 		return 0, err
 	}
 
-	return requestCountInt, nil
+	return requestCount, nil
 }
 
 func (limiter *LimiterService) isExceeded(requestCount int) bool {

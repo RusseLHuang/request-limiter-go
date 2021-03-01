@@ -8,7 +8,7 @@ import (
 )
 
 type LimiterRepository interface {
-	Increment(ctx context.Context, key string)
+	Increment(ctx context.Context, key string) int
 	Get(ctx context.Context, key string) string
 	Set(ctx context.Context, key string, value string, duration int)
 	Del(ctx context.Context, key string)
@@ -27,11 +27,13 @@ func NewRedisRepository(redisClient *redis.Client) *RedisRepository {
 func (redisRepository RedisRepository) Increment(
 	ctx context.Context,
 	key string,
-) {
-	res := redisRepository.client.Incr(ctx, key)
-	if res.Err() != nil {
-		panic(res.Err())
+) int {
+	res, err := redisRepository.client.Incr(ctx, key).Result()
+	if err != nil {
+		panic(err)
 	}
+
+	return int(res)
 }
 
 func (redisRepository RedisRepository) Get(

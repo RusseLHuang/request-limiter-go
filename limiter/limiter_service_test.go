@@ -12,12 +12,13 @@ type LimiterRepositoryMock struct {
 	Expiration   map[string]int64
 }
 
-func (r *LimiterRepositoryMock) Increment(ctx context.Context, key string) {
+func (r *LimiterRepositoryMock) Increment(ctx context.Context, key string) int {
 	if r.RequestCount[key] == nil {
 		r.RequestCount[key] = 0
 	}
 
 	r.RequestCount[key] = r.RequestCount[key].(int) + 1
+	return r.RequestCount[key].(int)
 }
 
 func (r *LimiterRepositoryMock) Get(ctx context.Context, key string) string {
