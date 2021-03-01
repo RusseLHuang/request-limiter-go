@@ -12,11 +12,7 @@ func main() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
-
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
+	viper.ReadInConfig()
 
 	requestLimit := viper.GetInt("LIMIT")
 	requestLimitDuration := viper.GetInt("LIMIT_DURATION")
