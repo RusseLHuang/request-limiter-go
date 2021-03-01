@@ -19,8 +19,10 @@ func main() {
 
 	requestLimit := viper.GetInt("limit")
 	requestLimitDuration := viper.GetInt("limitDuration")
+	redisUrl := viper.GetString("redisEndpoint")
+	redisPassword := viper.GetString("redisPassword")
 
-	redisClient := redis.GetClient()
+	redisClient := redis.NewClient(redisUrl, redisPassword)
 	redisRepository := limiter.NewRedisRepository(redisClient)
 	limiterService := limiter.NewLimiterService(
 		redisRepository,
