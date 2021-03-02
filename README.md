@@ -4,6 +4,12 @@ https://murmuring-scrubland-25884.herokuapp.com/
 ```
 
 # Local Setup
+Download local dependencies
+> Default Port 8080
+```
+go mod vendor
+go run main.go
+```
 
 ## Pre-requisites
 Create config.env at root directory
@@ -21,6 +27,8 @@ docker-compose up -d
 ```
 
 ## Run Test
+> When run e2e test, need to run redis on local
+> May use docker compose to run the redis
 ```
 go test ./...
 ```

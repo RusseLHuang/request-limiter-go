@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func main() {
+func Init() *gin.Engine {
 	viper.SetConfigType("env")
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
@@ -31,6 +31,12 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", limiterController.Limit)
+
+	return r
+}
+
+func main() {
+	r := Init()
 
 	r.Run()
 }
